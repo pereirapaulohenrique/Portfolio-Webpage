@@ -1,0 +1,19 @@
+# IDE-specific
+.vscode/
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Node modules (if you ever use build tools like SASS, Parcel, Webpack, etc.)
+node_modules/
+
+# Build output (if you use build tools)
+dist/
+build/
+
+# Any other temporary or sensitive files
+*.log
+temp/
