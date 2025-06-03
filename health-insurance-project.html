@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Insurance Cost Prediction - [YOUR NAME]</title>
+    <link rel="stylesheet" href="../style.css"> <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="project-header">
+        <div class="container">
+            <h1>Health Insurance Cost Prediction</h1>
+            <p class="tagline">Leveraging Machine Learning to Forecast Annual Medical Expenses</p>
+        </div>
+    </header>
+
+    <nav class="project-nav">
+        <div class="container">
+            <a href="../index.html#projects">← Back to All Projects</a>
+            <a href="#objetivo-proj">Objective</a>
+            <a href="#dataset-proj">Dataset</a>
+            <a href="#metodologia-proj">Methodology</a>
+            <a href="#resultados-proj">Results</a>
+            <a href="#aplicacoes-proj">Applications</a>
+            <a href="#tecnologias-proj">Technologies</a>
+            <a href="#repo-proj">Repository</a>
+        </div>
+    </nav>
+
+    <main class="project-main-content">
+        <section id="objetivo-proj" class="project-section">
+            <div class="container">
+                <h2>🚀 Project Objective</h2>
+                <p>The primary goal of this project was to develop an accurate and interpretable regression model capable of predicting annual health insurance costs for individuals. Key objectives included identifying the most significant factors influencing these costs, iteratively improving model performance, and demonstrating practical applications through interactive web tools.</p>
+            </div>
+        </section>
+
+        <section id="dataset-proj" class="project-section">
+            <div class="container">
+                <h2>📊 Dataset</h2>
+                <p>The project utilized a publicly available dataset simulating health insurance information, commonly known as "Medical Cost Personal Datasets" (often found on platforms like Kaggle). This dataset contains 1,338 records with the following features for each individual:</p>
+                <ul>
+                    <li><strong>Age:</strong> Age of the primary beneficiary.</li>
+                    <li><strong>Sex:</strong> Gender of the primary beneficiary.</li>
+                    <li><strong>BMI:</strong> Body Mass Index.</li>
+                    <li><strong>Children:</strong> Number of children/dependents covered by health insurance.</li>
+                    <li><strong>Smoker:</strong> Whether the person smokes (yes/no).</li>
+                    <li><strong>Region:</strong> The beneficiary's residential area in the US (e.g., southwest, southeast, northwest, northeast).</li>
+                    <li><strong>Charges:</strong> Individual annual medical costs billed by health insurance (the target variable for prediction).</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="metodologia-proj" class="project-section">
+            <div class="container">
+                <h2>🛠️ Methodology Applied</h2>
+                <p>A comprehensive machine learning workflow was followed:</p>
+                <ol>
+                    <li><strong>Exploratory Data Analysis (EDA):</strong> Initial investigation revealed a significant right-skew in the `charges` distribution and highlighted `smoker` status as a potentially strong predictor.</li>
+                    <li><strong>Data Preprocessing:</strong> Categorical features (`sex`, `smoker`, `region`) were converted to numerical format using one-hot encoding. The data was then split into training (80%) and testing (20%) sets.</li>
+                    <li><strong>Baseline Modeling:</strong> A Decision Tree Regressor was initially trained to establish baseline performance. This model showed signs of overfitting (high training R², lower test R²).</li>
+                    <li><strong>Hyperparameter Tuning (Iteration 1):</strong> `GridSearchCV` was used to tune the Decision Tree, which improved generalization and reduced MAE.</li>
+                    <li><strong>Ensemble Model Exploration:</strong> Random Forest Regressor and XGBoost Regressor were implemented and tuned. While showing strong R-squared values, they did not surpass the tuned Decision Tree in terms of Mean Absolute Error (MAE).</li>
+                    <li><strong>Key Enhancement Strategy (Iteration 2 for Decision Tree):</strong>
+                        <ul>
+                            <li><strong>Target Transformation:</strong> Applied a `log1p` transformation to the `charges` target variable to normalize its distribution and better handle extreme values.</li>
+                            <li><strong>Feature Engineering:</strong> Created interaction terms (e.g., `age_bmi_interaction`, `smoker_bmi_interaction`) and polynomial features (`age_squared`).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Re-tuning and Champion Model Selection:</strong> The Decision Tree was re-tuned with the transformed target and engineered features. This "Enhanced Tuned Decision Tree" yielded the best MAE on the test set.</li>
+                    <li><strong>Advanced Error Analysis:</strong> The champion model's predictions were further analyzed by segmenting errors (e.g., by smoker status, age group) and assessing performance excluding error outliers.</li>
+                </ol>
+                <p><em>(Consider embedding a key chart here, e.g., the final feature importance plot or the actual vs. predicted scatter plot.)</em></p>
+                </div>
+        </section>
+
+        <section id="resultados-proj" class="project-section">
+            <div class="container">
+                <h2>✨ Key Results & Insights</h2>
+                <p>The **Enhanced Tuned Decision Tree Regressor** (utilizing log-transformed target and engineered features) emerged as the champion model with the following performance on the test set:</p>
+                <ul>
+                    <li><strong>Mean Absolute Error (MAE): $1881.73</strong></li>
+                    <li>Root Mean Squared Error (RMSE): $4763.58</li>
+                    <li>R-squared (R²): 0.84</li>
+                </ul>
+                <p>This MAE signifies that, on average, the model's predictions are within ~$1,882 of the actual annual insurance cost. This is a substantial improvement compared to the inherent variability in the raw data (original standard deviation of `charges` was ~$12,110).</p>
+                <p><strong>Core Insights:</strong></p>
+                <ul>
+                    <li>The most influential features identified by the final model were **smoking status, age, and BMI**, with engineered interaction terms also playing a role.</li>
+                    <li>Target transformation (`log1p`) was crucial for improving predictions, especially for higher charge values, as indicated by the improved MAE and RMSE.</li>
+                    <li>Detailed error analysis showed the model is highly accurate for the majority of cases (MAE of ~$512 when excluding 31 error outliers), but specific segments like non-smokers (on average) and older individuals posed greater predictive challenges for specialized sub-models, reinforcing the strength of the well-enhanced global model.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="aplicacoes-proj" class="project-section">
+            <div class="container">
+                <h2>🚀 Interactive Applications (Demos)</h2>
+                <p>To demonstrate the practical application of the final model, two interactive web applications were developed using Streamlit:</p>
+                <ul>
+                    <li><strong>Individual Cost Estimator:</strong> Allows users to input their demographic and health-related information to receive an instant estimate of their potential annual health insurance costs.
+                        <br>
+                        <a href="[LINK_TO_COST_ESTIMATOR_APP]" target="_blank" class="btn-project-link">Try the Cost Estimator App</a>
+                    </li>
+                    <li><strong>Underwriter's Assistant Tool:</strong> Designed for business use, this tool provides a predicted cost, a risk category (Low, Medium, High), and highlights simplified key factors influencing the prediction for new applicants.
+                        <br>
+                        <a href="[LINK_TO_UNDERWRITER_ASSISTANT_APP]" target="_blank" class="btn-project-link">Try the Underwriter's Assistant App</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="tecnologias-proj" class="project-section">
+            <div class="container">
+                <h2>💻 Technologies Utilized</h2>
+                <ul>
+                    <li>Python</li>
+                    <li>Pandas, NumPy (Data Manipulation & Numerical Operations)</li>
+                    <li>Scikit-learn (DecisionTreeRegressor, RandomForestRegressor, GridSearchCV, Metrics, Preprocessing)</li>
+                    <li>XGBoost (Gradient Boosting Model)</li>
+                    <li>Matplotlib, Seaborn (Data Visualization)</li>
+                    <li>Joblib (Model Persistence)</li>
+                    <li>Streamlit (Web Application Development)</li>
+                    <li>Jupyter Notebook (Development Environment)</li>
+                    <li>Git & GitHub (Version Control & Hosting)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="repo-proj" class="project-section">
+            <div class="container">
+                <h2>🔗 Project Repository</h2>
+                <p><a href="[LINK_TO_YOUR_GITHUB_PROJECT_REPO]" target="_blank" class="btn-project-link">View Code on GitHub</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; [CURRENT YEAR] - [YOUR NAME]. <a href="../index.html">Back to Main Portfolio</a></p>
+        </div>
+    </footer>
+</body>
+</html>
