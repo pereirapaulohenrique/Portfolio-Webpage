@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Health Insurance Cost Prediction - [YOUR NAME]</title>
-    <link rel="stylesheet" href="css/style.css"> <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="project-header">
@@ -58,7 +59,7 @@
                 <ol>
                     <li><strong>Exploratory Data Analysis (EDA):</strong> Initial investigation revealed a significant right-skew in the `charges` distribution and highlighted `smoker` status as a potentially strong predictor.</li>
                     <li><strong>Data Preprocessing:</strong> Categorical features (`sex`, `smoker`, `region`) were converted to numerical format using one-hot encoding. The data was then split into training (80%) and testing (20%) sets.</li>
-                    <li><strong>Baseline Modeling:</strong> A Decision Tree Regressor was initially trained to establish baseline performance. This model showed signs of overfitting (high training R², lower test R²).</li>
+                    <li><strong>Baseline Modeling:</strong> A Decision Tree Regressor was initially trained to establish baseline performance. This model showed signs of overfitting.</li>
                     <li><strong>Hyperparameter Tuning (Iteration 1):</strong> `GridSearchCV` was used to tune the Decision Tree, which improved generalization and reduced MAE.</li>
                     <li><strong>Ensemble Model Exploration:</strong> Random Forest Regressor and XGBoost Regressor were implemented and tuned. While showing strong R-squared values, they did not surpass the tuned Decision Tree in terms of Mean Absolute Error (MAE).</li>
                     <li><strong>Key Enhancement Strategy (Iteration 2 for Decision Tree):</strong>
@@ -70,7 +71,7 @@
                     <li><strong>Re-tuning and Champion Model Selection:</strong> The Decision Tree was re-tuned with the transformed target and engineered features. This "Enhanced Tuned Decision Tree" yielded the best MAE on the test set.</li>
                     <li><strong>Advanced Error Analysis:</strong> The champion model's predictions were further analyzed by segmenting errors (e.g., by smoker status, age group) and assessing performance excluding error outliers.</li>
                 </ol>
-                <p><em>(Consider embedding a key chart here, e.g., the final feature importance plot or the actual vs. predicted scatter plot.)</em></p>
+                <p><em>(Consider embedding key charts here. Ensure image paths are correct relative to this HTML file's location if your 'images' folder is at the project root.)</em></p>
                 </div>
         </section>
 
